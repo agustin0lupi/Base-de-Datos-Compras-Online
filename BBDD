@@ -1,0 +1,65 @@
+DROP DATABASE IF EXISTS compras_online;
+
+CREATE DATABASE compras_online;
+    
+CREATE TABLE productos(
+	id_producto INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_producto VARCHAR(50)
+    );
+    
+CREATE TABLE compras(
+    id_compra INT PRIMARY KEY AUTO_INCREMENT,
+    id_producto INT NOT NULL,
+    fecha DATETIME,
+    precio INT,
+    FOREIGN KEY(id_producto) REFERENCES productos(id_producto)
+    );
+    
+CREATE TABLE clientes(
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    id_compra INT NOT NULL,
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    FOREIGN KEY (id_compra) REFERENCES compras(id_compra)
+    );
+    
+CREATE TABLE ciudades(
+    id_ciudad INT PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT NOT NULL,
+    nombre_ciudad VARCHAR(50),
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+    );
+
+CREATE TABLE provincias(
+    id_provincia INT PRIMARY KEY AUTO_INCREMENT,
+    id_ciudad INT NOT NULL,
+    nombre_provincia VARCHAR(50),
+    postal VARCHAR(10),
+    FOREIGN KEY(id_ciudad) REFERENCES ciudades(id_ciudad)
+    );
+    
+INSERT INTO productos(nombre_producto) VALUES ('Rexxona');
+INSERT INTO productos(nombre_producto) VALUES ('Coca Cola');
+INSERT INTO productos(nombre_producto) VALUES ('Kit Kat');
+INSERT INTO productos(nombre_producto) VALUES ('Coca Cola');
+INSERT INTO productos(nombre_producto) VALUES ('Esponja');
+INSERT INTO compras(id_producto, fecha, precio) VALUES (1, 23-03-2026, 4500);
+INSERT INTO compras(id_producto, fecha, precio) VALUES (2, 15-12-2025, 3000);
+INSERT INTO compras(id_producto, fecha, precio) VALUES (3, 01-10-2020, 2300);
+INSERT INTO compras(id_producto, fecha, precio) VALUES (4, 01-07-1984, 3000);
+INSERT INTO compras(id_producto, fecha, precio) VALUES (5, 30-11-2026, 500);
+INSERT INTO clientes(id_compra, nombre, apellido) VALUES (2, 'Agustin', 'Lupi');
+INSERT INTO clientes(id_compra, nombre, apellido) VALUES (1, 'Thiago', 'Decara');
+INSERT INTO clientes(id_compra, nombre, apellido) VALUES (3, 'Mateo', 'Rivero');
+INSERT INTO clientes(id_compra, nombre, apellido) VALUES (4, 'Axel', 'Veliz');
+INSERT INTO clientes(id_compra, nombre, apellido) VALUES (5, 'Dante', 'Palena');
+INSERT INTO ciudades(id_cliente, nombre_ciudad) VALUES (2, 'Versalles');
+INSERT INTO ciudades(id_cliente, nombre_ciudad) VALUES (1, 'Ciudadela');
+INSERT INTO ciudades(id_cliente, nombre_ciudad) VALUES (5, 'Manhattan');
+INSERT INTO ciudades(id_cliente, nombre_ciudad) VALUES (4, 'Ciudadela');
+INSERT INTO ciudades(id_cliente, nombre_ciudad) VALUES (3, 'Comunal 11');
+INSERT INTO provincias(id_ciudad, nombre_provincia) VALUES (1, 'Buesnos Aires');
+INSERT INTO provincias(id_ciudad, nombre_provincia) VALUES (2, 'Mra De Plata');
+INSERT INTO provincias(id_ciudad, nombre_provincia) VALUES (3, 'Sants Fe');
+INSERT INTO provincias(id_ciudad, nombre_provincia) VALUES (5, 'Nueva Yprk');
+INSERT INTO provincias(id_ciudad, nombre_provincia) VALUES (4, 'Mar d ePlata');
