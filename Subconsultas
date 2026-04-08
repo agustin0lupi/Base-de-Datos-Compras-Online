@@ -1,0 +1,27 @@
+1) SELECT nombre FROM clientes WHERE localidad = (SELECT id FROM ciudades WHERE nombre = "Buenos Aires")
+
+2) SELECT descripcion FROM productos WHERE precio > (SELECT AVG(precio) FROM productos)
+
+3) SELECT nombre FROM clientes WHERE id = (SELECT cliente FROM compras WHERE producto = 5)
+
+4) SELECT nombre FROM provincias WHERE poblacion > (SELECT AVG(poblacion) FROM provincias)
+
+5) SELECT descripcion FROM productos WHERE precio = (SELECT precio FROM productos WHERE descripcion = "Birome Azul")
+
+6) SELECT nombre FROM ciudades WHERE provincia = (SELECT id FROM provincias WHERE nombre = "Buenos Aires")
+
+7) SELECT nombre FROM clientes WHERE id NOT IN (SELECT cliente FROM compras)
+
+8) SELECT nombre FROM clientes WHERE apellido = (SELECT apellido FROM clientes GROUP BY apellido DESC LIMIT 1)
+
+9) SELECT nombre, localidad FROM clientes WHERE localidad = (SELECT id FROM ciudades WHERE id = 1)
+
+10) SELECT descripcion FROM productos WHERE stock < (SELECT AVG(stock) FROM productos)
+
+11) SELECT nombre FROM ciudades WHERE poblacion > (SELECT poblacion FROM ciudades WHERE nombre = "Rosario")
+
+12) SELECT nombre FROM clientes WHERE id IN (SELECT cliente FROM compras)
+
+13) SELECT descripcion FROM productos WHERE id NOT IN (SELECT producto FROM compras)
+
+14) SELECT nombre FROM provincias WHERE id = (SELECT id FROM provincias WHERE region = "La Pampa")
