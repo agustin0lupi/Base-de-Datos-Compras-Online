@@ -99,7 +99,7 @@ DELIMITER ;
 9)
 DELIMITER //
 	CREATE FUNCTION nombre_cliente(id_cliente INT)
-    RETURNS INT
+    RETURNS VARCHAR(50)
     BEGIN
     	IF id_cliente IN (SELECT id FROM clientes) THEN
     		RETURN (SELECT nombre, apellido FROM clientes WHERE id = id_cliente) ;
@@ -110,7 +110,7 @@ DELIMITER ;
 10)
 DELIMITER //
 	CREATE FUNCTION marca_producto(id_producto INT)
-    RETURNS INT
+    RETURNS VARCHAR(40)
     BEGIN
     	IF id_producto IN (SELECT id FROM producto) THEN
     		RETURN (SELECT marca FROM productos WHERE id = id_producto) ;
