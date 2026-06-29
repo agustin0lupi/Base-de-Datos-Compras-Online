@@ -1,0 +1,120 @@
+1)
+DELIMITER //
+CREATE FUNCTION precio_con_iva(precio DECIMAL(10,2))
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+RETURN precio * 1.21 ;     
+END //
+DELIMITER ;
+
+2)
+DELIMITER //
+CREATE FUNCTION doble_stock(stock INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+RETURN stock * 2 ;
+END //
+DELIMITER ; 
+
+3)
+DELIMITER //
+CREATE FUNCTION nombre_completo(nombre VARCHAR(20), apellido VARCHAR(20))
+RETURNS VARCHAR(40)
+DETERMINISTIC
+BEGIN
+DECLARE completo VARCHAR(40) ;
+SET completo = apellido + nombre ;
+RETURN completo ;
+END // 
+DELIMITER ;
+
+4)
+DELIMITER //
+	CREATE FUNCTION estado_stock(stock INT)
+	RETURNS VARCHAR(20)
+	DETERMINISTIC
+	BEGIN
+		IF stock = 0 THEN
+			RETURN 'Sin stock' ; 
+		ELSEIF stock < 20 AND stock > 0 THEN
+			RETURN "Bajo" ;
+		ELSEIF stock >=20 THEN
+			RETURN "Disponible" ; 
+			END IF ;
+		END // 
+DELIMITER ;
+
+5)
+DELIMITER //
+	CREATE FUNCTION clasificar_precio(precio DECIMAL(7,2))
+    RETURNS VARCHAR(20)
+    DETERMINISTIC
+    BEGIN
+    	IF precio < 100 THEN
+        	RETURN 'Barato' ;
+        ELSEIF precio > 100 AND precio < 500 THEN
+        	RETURN 'Medio' ;
+        ELSEIF precio > 500 THEN
+        	RETURN 'Caro' ;
+        END IF ;
+    END //
+DELIMITER ;
+
+6)
+DELIMITER //
+    CREATE FUNCTION aplicar_descuento(precio DECIMAL(7,2), porcentaje INT)
+    RETURNS DECIMAL(7,2)
+    DETERMINISTIC
+    BEGIN
+         DECLARE descuento DECIMAL(7,2) ;
+        SET descuento = precio - ((precio * porcentaje) / 100) ;
+        RETURN descuento ;
+    END //
+DELIMITER ;
+
+7)
+DELIMITER //
+	CREATE FUNCTION obtener_precio(id_producto INT)
+    RETURNS DECIMAL(7,2)
+    BEGIN
+    	IF id_producto IN (SELECT id FROM productos) THEN
+    		RETURN (SELECT precio FROM productos WHERE id = id_producto) ;
+        END IF ;
+    END //
+DELIMITER ;
+
+8)
+DELIMITER //
+	CREATE FUNCTION obetener_stock(id_producto INT)
+    RETURNS INT
+    BEGIN
+    	IF id_producto IN (SELECT id FROM productos) THEN
+    		RETURN (SELECT stock FROM productos WHERE id = id_producto) ;
+        END IF ;
+    END //
+DELIMITER ;
+
+9)
+DELIMITER //
+	CREATE FUNCTION nombre_cliente(id_cliente INT)
+    RETURNS INT
+    BEGIN
+    	IF id_cliente IN (SELECT id FROM clientes) THEN
+    		RETURN (SELECT nombre, apellido FROM clientes WHERE id = id_cliente) ;
+        END IF ;
+    END //
+DELIMITER ;
+
+10)
+DELIMITER //
+	CREATE FUNCTION marca_producto(id_producto INT)
+    RETURNS INT
+    BEGIN
+    	IF id_producto IN (SELECT id FROM producto) THEN
+    		RETURN (SELECT marca FROM productos WHERE id = id_producto) ;
+        END IF ;
+    END //
+DELIMITER ;
+
