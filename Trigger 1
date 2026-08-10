@@ -1,0 +1,63 @@
+-- Creacion de BBDD y Tabla
+DROP DATABASE IF EXISTS oficina ;
+CREATE DATABASE oficina ;
+USE oficina ;
+CREATE TABLE empleados(
+    cantidad_horas INT,
+    nombre VARCHAR(50),
+    dni INT,
+    rol VARCHAR(50)
+);
+
+-- Ejercicio 1
+CREATE TABLE roles(
+    rol VARCHAR(50) PRIMARY KEY,
+    pago_hora DOUBLE(7,2)
+);
+ALTER TABLE empleados ADD COLUMN FOREIGN KEY(rol) REFERENCES roles(rol)
+
+-- Ejercicio 2
+DELIMITER //
+CREATE PROCEDURE insertar_salario()
+BEGIN
+    ALTER TABLE empleados ADD COLUMN salario DOUBLE(7,2) ;
+END //
+DELIMITER ;
+
+CALL insertar_salario() ;
+
+-- Ejercicio 3
+DELIMITER //
+	CREATE TRIGGER actualizar_precio
+    AFTER UPDATE ON roles
+    FOR EACH ROW
+    BEGIN
+    	UPDATE empleados
+        SET salario = salario * empleados.cantidad_horas
+        JOIN roles ON roles.rol = empleados.rol 
+        WHERE roles.rol = roles.rol;
+    END //
+DELIMITER ;
+
+-- Ejercicio 4
+DELIMITER //
+	CREATE FUNCTION eliminar_empleado(rol VARCHAR(50))
+    RETURNS VARCHAR(50)
+    DETERMINISTIC
+    BEGIN
+    	DELETE FROM empleados 
+        WHERE rol IS NULL ;
+        RETURN rol ;
+    END //
+DELIMITER ;
+
+-- Ejercicio 5
+DROP TRIGGER IF EXISTS empleados_gerente
+DELIMITER //
+	CREATE TRIGGER empleados_gerente
+    BEFORE DELETE ON empleados
+    FOR EACH ROW
+    BEGIN 
+    	DELETE FROM empleados WHERE rol != "gerente" ;
+    END //
+DELIMITER ;
