@@ -35,7 +35,7 @@ DELIMITER //
     	UPDATE empleados
         SET salario = salario * empleados.cantidad_horas
         JOIN roles ON roles.rol = empleados.rol 
-        WHERE roles.rol = roles.rol;
+        WHERE roles.rol = NEW.rol;
     END //
 DELIMITER ;
 
